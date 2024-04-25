@@ -2,33 +2,52 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { STATUS_CODES } from 'http';
 
-@Controller('products')
+@Controller('api/product')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+  async create(@Body() createProductDto: any) {
+    const result = await this.productsService.create(createProductDto);
+    const allProducts = await this.productsService.findAll();
+    return {
+      message: 'Thêm sản phẩm thành công',
+      data: allProducts,
+      STATUS_CODES: STATUS_CODES.OK,
+    };
   }
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
+  async findAll() {
+    return await this.productsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  findOne(@Param('id') id: any) {
+    return this.productsService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
-  }
+  // @Put(':id')
+  // async update(@Param('id') id: string, @Body() updateProductDto: any) {
+  //   const result = await this.productsService.update(+id, updateProductDto);
+  //   const allProducts = await this.productsService.findAll();
+  //   return {
+  //     message: 'Cập nhật sản phẩm thành công',
+  //     data: allProducts,
+  //     STATUS_CODES: STATUS_CODES.OK
+  //   }
+  // }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const result = await this.productsService.remove(+id);
+    const allProducts = await this.productsService.findAll();
+    return {
+      message: 'Xoá sản phẩm thành công',
+      data: allProducts,
+      STATUS_CODES: STATUS_CODES.OK,
+    };
   }
 }

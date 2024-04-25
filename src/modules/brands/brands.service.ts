@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Brand } from './entities/brand.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BrandsService {
-  create(createBrandDto: CreateBrandDto) {
-    return 'This action adds a new brand';
+  constructor(@InjectRepository(Brand) private brandRepos: Repository<Brand>) {}
+
+  async create(createBrandDto: CreateBrandDto) {
+   
+    const result = await this.brandRepos.create(createBrandDto);
+  
+    return this.brandRepos.save(result);
   }
 
-  findAll() {
-    return `This action returns all brands`;
+  async findAll() {
+    return await this.brandRepos.find();
   }
 
   findOne(id: number) {
     return `This action returns a #${id} brand`;
   }
 
-  update(id: number, updateBrandDto: UpdateBrandDto) {
-    return `This action updates a #${id} brand`;
+  async update(id: number, updateBrandDto: UpdateBrandDto) {
+    return await this.brandRepos
+      .createQueryBuilder()
+      .update(Brand)
+      .set(updateBrandDto)
+      .where('id = :id', { id })
+      .execute();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} brand`;
+  async remove(id: number) {
+    return await this.brandRepos.delete(id);
   }
 }

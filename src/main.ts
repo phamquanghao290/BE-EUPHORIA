@@ -8,7 +8,7 @@ import * as basicAuth from "express-basic-auth";
 
 // Import firebase
 import * as admin from 'firebase-admin';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
 import { ServiceAccount } from 'firebase-admin';
 
 async function bootstrap() {
