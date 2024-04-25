@@ -20,6 +20,9 @@ export class Order {
     address: string;
 
     @Column()
+    address_city: string;
+
+    @Column()
     phone: string;
 
     @Column({
