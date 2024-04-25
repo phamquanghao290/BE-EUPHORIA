@@ -38,7 +38,7 @@ export class UserController {
   async changeStatus(@Param('id') id: string) {
     const result = await this.userService.updateStatusUser(+id);
     return {
-      message: 'Update success',
+      message: 'Update ok',
       data: result,
     };
   }
