@@ -19,7 +19,9 @@ export class Order {
     })
     address: string;
 
-    @Column()
+    @Column({
+        type: 'text',
+    })
     address_city: string;
 
     @Column()
