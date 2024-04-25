@@ -44,8 +44,9 @@ export class AuthController {
   }
 
   @Post('/register')
-  @HttpCode(201)
-  async register(@Body() user) {
+  // @HttpCode(201)
+  async register(@Body() user: any) {
+    console.log(user);
     const { email } = user;
     const check = await this.userService.getOneUserByEmail(email);
     if (check) {

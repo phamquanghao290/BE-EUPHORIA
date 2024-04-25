@@ -18,7 +18,7 @@ export class UserService {
     return await this.userRepository.findOne({ where: { email } });
   }
 
-  create(createUserDto: CreateUserDto) {
+  create(createUserDto: any) {
     return this.userRepository
       .createQueryBuilder('user')
       .insert()

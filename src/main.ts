@@ -18,16 +18,16 @@ async function bootstrap() {
   // app.use(multer().none());
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
-  app.use(
-    // Paths you want to protect with basic auth
-    "/docs*",
-    basicAuth({
-      challenge: true,
-      users: {
-        yourUserName: "p4ssw0rd",
-      },
-    })
-  );
+  // app.use(
+  //   // Paths you want to protect with basic auth
+  //   "/docs*",
+  //   basicAuth({
+  //     challenge: true,
+  //     users: {
+  //       yourUserName: "p4ssw0rd",
+  //     },
+  //   })
+  // );
 
   // Kêt nối firebase
 
@@ -45,15 +45,15 @@ async function bootstrap() {
 //   }); 
   // Sử dụng middleware express-formidable
   
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+  // app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  // useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document,  {
-    swaggerOptions: {
-      security: [{ 'bearer': [] }],
-    },
-  });
+  // const document = SwaggerModule.createDocument(app, config);
+  // SwaggerModule.setup('api-docs', app, document,  {
+  //   swaggerOptions: {
+  //     security: [{ 'bearer': [] }],
+  //   },
+  // });
 
   await app.listen(PORT, () => {
     console.log(`App listen on port: http://localhost:${PORT}`);
