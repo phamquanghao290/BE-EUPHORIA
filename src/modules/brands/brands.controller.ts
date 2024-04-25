@@ -3,32 +3,48 @@ import { BrandsService } from './brands.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 
-@Controller('brands')
+@Controller('api/brand')
 export class BrandsController {
   constructor(private readonly brandsService: BrandsService) {}
 
   @Post()
-  create(@Body() createBrandDto: CreateBrandDto) {
-    return this.brandsService.create(createBrandDto);
+  async create(@Body() createBrandDto: CreateBrandDto) {
+    console.log(createBrandDto);
+    const result = await this.brandsService.create(createBrandDto);
+    const allBrand = await this.brandsService.findAll();
+    return {
+      message: 'Thêm thương hiệu thành công',
+      data: allBrand,
+    };
   }
 
   @Get()
-  findAll() {
-    return this.brandsService.findAll();
+  async findAll() {
+    return await this.brandsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.brandsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.brandsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
-    return this.brandsService.update(+id, updateBrandDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateBrandDto: UpdateBrandDto,
+  ) {
+    const result = await this.brandsService.update(+id, updateBrandDto);
+    const allBrand = await this.brandsService.findAll();
+    return {
+      message: 'Cập nhật thương hiệu thành công',
+      data: allBrand,
+    };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.brandsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const result = await this.brandsService.remove(+id);
+    const allBrand = await this.brandsService.findAll();
+    return { message: 'Xoá thương hiệu thành công', data: allBrand };
   }
 }
