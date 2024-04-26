@@ -15,4 +15,7 @@ export class FavoriteProduct {
     @ManyToOne(() => Product, (product) => product.id)
     @JoinColumn({ name: 'product_id' })
     product: Product;
+
+    @Column()
+    quantity: number;
 }
