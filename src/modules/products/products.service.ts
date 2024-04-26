@@ -13,13 +13,12 @@ export class ProductsService {
   ) {}
 
   async create(createProductDto: any) {
-    console.log(createProductDto);
     const newProduct = await this.productRepos
       .createQueryBuilder()
       .insert()
       .into(Product)
       .values({
-        name_product: createProductDto.name_product,
+        name_product: createProductDto.nameProduct,
         price: createProductDto.price,
         image: createProductDto.image,
         stock: createProductDto.stock,
@@ -42,11 +41,13 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: any) {
+  
+    
     const updateProduct = await this.productRepos
       .createQueryBuilder()
       .update(Product)
       .set({
-        name_product: updateProductDto.name_product,
+        name_product: updateProductDto.nameProduct,
         price: updateProductDto.price,
         image: updateProductDto.image,
         stock: updateProductDto.stock,
@@ -60,5 +61,12 @@ export class ProductsService {
 
   async remove(id: number) {
     return await this.productRepos.delete(id);
+  }
+  async searchProductsByName(name: string): Promise<Product[]> {
+    return this.productRepos
+      .createQueryBuilder('product')
+      .innerJoinAndSelect('product.category', 'category')
+      .where('product.name_product like :name', { name: `%${name}%` })
+      .getMany();
   }
 }

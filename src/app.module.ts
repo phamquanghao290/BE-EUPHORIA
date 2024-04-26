@@ -13,7 +13,6 @@ import { BannerModule } from './modules/banner/banner.module';
 import { FavoriteProductModule } from './modules/favorite_product/favorite_product.module';
 import { CategoryModule } from './modules/category/category.module';
 
-
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
@@ -29,7 +28,7 @@ import { CategoryModule } from './modules/category/category.module';
     BrandsModule,
     BannerModule,
     FavoriteProductModule,
-    CategoryModule
+    CategoryModule,
   ],
   controllers: [],
   providers: [],

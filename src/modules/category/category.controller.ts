@@ -9,7 +9,9 @@ export class CategoryController {
 
   @Post()
   async create(@Body() categories: CreateCategoryDto) {
-    const result = await this.categoryService.create(categories);
+    const { name_category } = categories;
+    
+    const result = await this.categoryService.create(name_category);
     const allCategory = await this.categoryService.findAll();
     return {
       message: 'Thêm thành công',
@@ -27,18 +29,18 @@ export class CategoryController {
     return this.categoryService.findOne(+id);
   }
 
-  @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateCategoryDto: UpdateCategoryDto,
-  ) {
-    const result = await this.categoryService.update(+id, updateCategoryDto);
-    const allCategory = await this.categoryService.findAll();
-    return {
-      message: 'Cập nhật category thành công',
-      data: allCategory,
-    };
-  }
+    @Patch(':id')
+    async update(
+      @Param('id') id: string,
+      @Body() updateCategoryDto: UpdateCategoryDto,
+    ) {
+      const result = await this.categoryService.update(+id, updateCategoryDto);
+      const allCategory = await this.categoryService.findAll();
+      return {
+        message: 'Cập nhật category thành công',
+        data: allCategory,
+      };
+    }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {

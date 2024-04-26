@@ -12,28 +12,29 @@ export class FavoriteProductService {
     private readonly favoriteProductRepos: Repository<FavoriteProduct>,
   ) {}
 
-  async create(user_id, product_id) {
+  async create(user_id, id) {
+    
     const result = await this.favoriteProductRepos
-      .createQueryBuilder('favoriteProduct')
-      .leftJoinAndSelect('favoriteProduct.user', 'user')
-      .leftJoinAndSelect('favoriteProduct.product', 'product')
+      .createQueryBuilder('favorite_product')
+      .leftJoinAndSelect('favorite_product.user', 'user')
+      .leftJoinAndSelect('favorite_product.product', 'product')
       .where('user_id = :user_id', { user_id }) // Sửa thành { user: user }
-      .andWhere('product_id = :product_id', { product_id }) // Sửa thành { product: product }
+      .andWhere('product_id = :product_id', { product_id: id }) // Sửa thành { product: product }
       .execute();
     if (result.length == 0) {
       const addProduct = await this.favoriteProductRepos
         .createQueryBuilder()
         .insert()
         .into(FavoriteProduct)
-        .values({ user: user_id, product: product_id })
+        .values({ user: user_id, product: id })
         .execute();
       return {
-        message: 'Thêm thành công',
+        message: 'More success',
         data: addProduct,
       };
     } else {
       return {
-        message: 'Sản phẩm đã có trong yêu thích',
+        message: 'The product is already in favorites',
       };
     }
   }
