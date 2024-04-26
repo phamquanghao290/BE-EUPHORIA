@@ -11,10 +11,15 @@ export class CategoryService {
     @InjectRepository(Category) private categoryRepos: Repository<Category>,
   ) {}
 
-  async create(createCategoryDto: CreateCategoryDto) {
-    return this.categoryRepos.save(
-      await this.categoryRepos.create(createCategoryDto),
-    );
+  async create(name_category: string) {
+   
+    
+  return await this.categoryRepos
+    .createQueryBuilder()
+    .insert()
+    .into(Category)
+    .values({name_category: name_category})
+    .execute();
   }
 
   async findAll() {

@@ -10,9 +10,12 @@ export class FavoriteProductController {
   ) {}
 
   @Post(':id')
-  create(@Param('id') user_id: string, @Body() favoriteProductService: any) {
-    const { id: product_id } = favoriteProductService;
-    return this.favoriteProductService.create(+user_id, product_id);
+  create(@Param('id') user_id: string, @Body() product_id: any) {
+   
+    const { id } = product_id
+    
+    
+    return this.favoriteProductService.create(+user_id,id);
   }
 
   @Get(':id')
@@ -37,7 +40,7 @@ export class FavoriteProductController {
   remove(@Param('id') id: string) {
     const result = this.favoriteProductService.remove(+id);
     return {
-      message: 'Xoa thanh cong',
+      message: 'Deleted successfully',
       data: result,
     };
   }
