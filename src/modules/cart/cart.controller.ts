@@ -1,34 +1,49 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 
-@Controller('cart')
+@Controller('api/cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
-
-  @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  @Get('getCartByUserId/:id')
+  async getCartByUserId(@Param() userId: any) {
+    return await this.cartService.findOne(Number(userId.id));
   }
 
-  @Get()
-  findAll() {
-    return this.cartService.findAll();
+  @Post('addToCart')
+  async create(@Body() createCartDto: any) {
+    const { product, userId } = createCartDto;
+    return await this.cartService.create(userId, product);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  @Put('increase')
+  async increase(@Body() createCartDto: any) {
+    return await this.cartService.increaseStock(createCartDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartService.update(+id, updateCartDto);
+  @Put('decrease')
+  async decrease(@Body() createCartDto: any) {
+    return await this.cartService.decreaseStock(createCartDto);
   }
+
+  @Get('all-cart')
+  async findAll() {
+    // lấy ra tất cả user_id trong bảng cart
+    return await this.cartService.findAll();
+  }
+
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
+  //   return this.cartService.update(+id, updateCartDto);
+  // }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.cartService.remove(+id);
+  }
+  @Delete('all/:id')
+  deleteCartUser(@Param('id') id: string) {
+    return this.cartService.deleteAll(+id);
   }
 }
