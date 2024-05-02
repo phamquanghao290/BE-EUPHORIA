@@ -2,6 +2,8 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'typeorm';
+import * as formidable from 'express-formidable';
+import * as multer from 'multer';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import config from './config/swagger-config';
 import * as basicAuth from "express-basic-auth";

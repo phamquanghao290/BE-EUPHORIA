@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../users/users.service';
+import { log } from 'console';
 
 @Controller('api')
 export class AuthController {
