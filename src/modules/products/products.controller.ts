@@ -18,7 +18,7 @@ export class ProductsController {
     const result = await this.productsService.create(createProductDto);
     const allProducts = await this.productsService.findAll();
     return {
-      message: 'Thêm sản phẩm thành công',
+      message: 'Added product successfully',
       data: allProducts,
       STATUS_CODES: STATUS_CODES.OK,
     };
@@ -39,10 +39,10 @@ export class ProductsController {
     const result = await this.productsService.update(+id, updateProductDto);
     const allProducts = await this.productsService.findAll();
     return {
-      message: 'Cập nhật sản phẩm thành công',
+      message: 'Product update successful',
       data: allProducts,
-      STATUS_CODES: STATUS_CODES.OK
-    }
+      STATUS_CODES: STATUS_CODES.OK,
+    };
   }
 
   @Delete(':id')
@@ -50,7 +50,7 @@ export class ProductsController {
     const result = await this.productsService.remove(+id);
     const allProducts = await this.productsService.findAll();
     return {
-      message: 'Xoá sản phẩm thành công',
+      message: 'Product deletion successful',
       data: allProducts,
       STATUS_CODES: STATUS_CODES.OK,
     };
