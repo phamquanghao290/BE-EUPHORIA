@@ -13,7 +13,6 @@ export class FavoriteProductService {
   ) {}
 
   async create(user_id, id) {
-    
     const result = await this.favoriteProductRepos
       .createQueryBuilder('favorite_product')
       .leftJoinAndSelect('favorite_product.user', 'user')
@@ -56,8 +55,8 @@ export class FavoriteProductService {
     return `This action updates a #${id} favoriteProduct`;
   }
 
-  remove(id: number) {
-    const result = this.favoriteProductRepos.delete(id);
-    return result;
+ async remove(id: number) {
+   const result = await this.favoriteProductRepos.delete(id);
+   return result
   }
 }

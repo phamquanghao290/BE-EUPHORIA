@@ -10,11 +10,11 @@ export class CategoryController {
   @Post()
   async create(@Body() categories: CreateCategoryDto) {
     const { name_category } = categories;
-    
+ 
     const result = await this.categoryService.create(name_category);
     const allCategory = await this.categoryService.findAll();
     return {
-      message: 'Thêm thành công',
+      message: 'More success',
       data: allCategory,
     };
   }
@@ -37,7 +37,7 @@ export class CategoryController {
       const result = await this.categoryService.update(+id, updateCategoryDto);
       const allCategory = await this.categoryService.findAll();
       return {
-        message: 'Cập nhật category thành công',
+        message: 'Update category successfully',
         data: allCategory,
       };
     }
@@ -46,6 +46,6 @@ export class CategoryController {
   async remove(@Param('id') id: string) {
     const result = await this.categoryService.remove(+id);
     const allCategory = await this.categoryService.findAll();
-    return { message: 'Xóa thành công', data: allCategory };
+    return { message: 'Deleted successfully', data: allCategory };
   }
 }

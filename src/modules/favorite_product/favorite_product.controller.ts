@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FavoriteProductService } from './favorite_product.service';
 import { CreateFavoriteProductDto } from './dto/create-favorite_product.dto';
 import { UpdateFavoriteProductDto } from './dto/update-favorite_product.dto';
@@ -11,11 +19,8 @@ export class FavoriteProductController {
 
   @Post(':id')
   create(@Param('id') user_id: string, @Body() product_id: any) {
-   
-    const { id } = product_id
-    
-    
-    return this.favoriteProductService.create(+user_id,id);
+    const { id } = product_id;
+    return this.favoriteProductService.create(+user_id, id);
   }
 
   @Get(':id')
@@ -39,9 +44,7 @@ export class FavoriteProductController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     const result = this.favoriteProductService.remove(+id);
-    return {
-      message: 'Deleted successfully',
-      data: result,
-    };
+    return result
+   
   }
 }
