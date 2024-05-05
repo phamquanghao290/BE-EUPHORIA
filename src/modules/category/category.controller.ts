@@ -10,7 +10,6 @@ export class CategoryController {
   @Post()
   async create(@Body() categories: CreateCategoryDto) {
     const { name_category } = categories;
- 
     const result = await this.categoryService.create(name_category);
     const allCategory = await this.categoryService.findAll();
     return {

@@ -19,6 +19,7 @@ export class UserService {
   }
 
   create(createUserDto: any) {
+    console.log(createUserDto);
     return this.userRepository
       .createQueryBuilder('user')
       .insert()

@@ -2,7 +2,7 @@ import { OrderDetail } from 'src/modules/order-detail/entities/order-detail.enti
 import { User } from 'src/modules/users/entities/user.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-enum StatusOrder {
+export enum StatusOrder {
   Pending = 0,
   Accepted = 1,
   Completed = 2,
@@ -32,7 +32,7 @@ export class Order {
         enum: StatusOrder,
         default: StatusOrder.Pending,
     })
-    status_order: number;
+    status_order: StatusOrder;
 
     @Column({
         type: 'decimal',

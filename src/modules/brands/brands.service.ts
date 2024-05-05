@@ -4,15 +4,16 @@ import { UpdateBrandDto } from './dto/update-brand.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Brand } from './entities/brand.entity';
 import { Repository } from 'typeorm';
+import { log } from 'console';
 
 @Injectable()
-export class BrandsService {
+export class BrandService {
   constructor(@InjectRepository(Brand) private brandRepos: Repository<Brand>) {}
 
   async create(createBrandDto: CreateBrandDto) {
-   
+    log(createBrandDto);
     const result = await this.brandRepos.create(createBrandDto);
-  
+    log(result);
     return this.brandRepos.save(result);
   }
 
