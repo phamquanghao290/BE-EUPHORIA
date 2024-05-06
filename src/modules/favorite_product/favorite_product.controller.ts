@@ -19,7 +19,7 @@ export class FavoriteProductController {
 
   @Post(':id')
   create(@Param('id') user_id: string, @Body() product_id: any) {
-    const { id } = product_id;
+    const { id } = product_id;    
     return this.favoriteProductService.create(+user_id, id);
   }
 

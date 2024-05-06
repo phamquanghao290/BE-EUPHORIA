@@ -4,6 +4,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
+import { STATUS_CODES } from 'http';
 
 @Injectable()
 export class ProductsService {
@@ -13,20 +14,27 @@ export class ProductsService {
   ) {}
 
   async create(createProductDto: any) {
-    const newProduct = await this.productRepos
-      .createQueryBuilder()
-      .insert()
-      .into(Product)
-      .values({
-        name_product: createProductDto.nameProduct,
-        price: createProductDto.price,
-        image: createProductDto.image,
-        stock: createProductDto.stock,
-        rating: createProductDto.rate,
-        category: createProductDto.category_id,
-        brand: createProductDto.brand_id,
-      })
-      .execute();
+    if (!CreateProductDto) {
+      return {
+        message: 'Add product failed',
+        STATUS_CODES: STATUS_CODES.BAD_REQUEST,
+      };
+    } else {
+      const newProduct = await this.productRepos
+        .createQueryBuilder()
+        .insert()
+        .into(Product)
+        .values({
+          name_product: createProductDto.nameProduct,
+          price: createProductDto.price,
+          image: createProductDto.image,
+          stock: createProductDto.stock,
+          rating: createProductDto.rate,
+          category: createProductDto.category_id,
+          brand: createProductDto.brand_id,
+        })
+        .execute();
+    }
   }
 
   async findAll() {
@@ -41,8 +49,6 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: any) {
-  
-    
     const updateProduct = await this.productRepos
       .createQueryBuilder()
       .update(Product)
