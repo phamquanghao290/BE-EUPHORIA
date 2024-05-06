@@ -44,6 +44,10 @@ export class OrderDetailService {
     const result = await this.orderDetailRepo
       .createQueryBuilder('orderDetail')
       .leftJoinAndSelect('orderDetail.product', 'productId')
+      .innerJoinAndSelect('orderDetail.order', 'orderId')
+      .innerJoinAndSelect('orderId.user', 'userId')
+      .where('userId.id = :id', { id })
+      .where('orderId.id = :id', { id })
       .where('orderDetail.order = :id', { id })
       .getMany();
     return result;
