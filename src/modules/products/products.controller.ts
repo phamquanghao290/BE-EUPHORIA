@@ -9,12 +9,11 @@ import { Product } from './entities/product.entity';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
   @Get('search')
-  async searchProducts(@Query("key") name: string): Promise<Product[]> {
-    
+  async searchProducts(@Query('key') name: string): Promise<Product[]> {
     return this.productsService.searchProductsByName(name);
   }
   @Post()
-  async create(@Body() createProductDto: any) {
+  async create(@Body() createProductDto: CreateProductDto) {
     const result = await this.productsService.create(createProductDto);
     const allProducts = await this.productsService.findAll();
     return {
@@ -30,12 +29,15 @@ export class ProductsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: any) {
-    return this.productsService.findOne(id);
+  findOne(@Param('id') id: string) {
+    return this.productsService.findOne(+id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateProductDto: any) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductDto: CreateProductDto,
+  ) {
     const result = await this.productsService.update(+id, updateProductDto);
     const allProducts = await this.productsService.findAll();
     return {

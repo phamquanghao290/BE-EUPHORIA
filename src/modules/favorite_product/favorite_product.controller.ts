@@ -18,8 +18,11 @@ export class FavoriteProductController {
   ) {}
 
   @Post(':id')
-  create(@Param('id') user_id: string, @Body() product_id: any) {
-    const { id } = product_id;    
+  create(
+    @Param('id') user_id: string,
+    @Body() product_id: CreateFavoriteProductDto,
+  ) {
+    const { id } = product_id;
     return this.favoriteProductService.create(+user_id, id);
   }
 
@@ -44,7 +47,6 @@ export class FavoriteProductController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     const result = this.favoriteProductService.remove(+id);
-    return result
-   
+    return result;
   }
 }

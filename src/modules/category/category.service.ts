@@ -12,14 +12,12 @@ export class CategoryService {
   ) {}
 
   async create(name_category: string) {
-   
-    
-  return await this.categoryRepos
-    .createQueryBuilder()
-    .insert()
-    .into(Category)
-    .values({name_category: name_category})
-    .execute();
+    return await this.categoryRepos
+      .createQueryBuilder()
+      .insert()
+      .into(Category)
+      .values({ name_category: name_category })
+      .execute();
   }
 
   async findAll() {
