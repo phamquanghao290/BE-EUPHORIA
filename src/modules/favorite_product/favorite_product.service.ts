@@ -25,7 +25,7 @@ export class FavoriteProductService {
         .createQueryBuilder()
         .insert()
         .into(FavoriteProduct)
-        .values({ user: user_id, product: id })
+        .values({ user: user_id, product: id, quantity: 1 })
         .execute();
       return {
         message: 'More success',
