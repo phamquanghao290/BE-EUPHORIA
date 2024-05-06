@@ -47,7 +47,7 @@ export class OrderService {
       .getMany();
   }
   async cancelOrder(id: number) {
-    await this.oderRepository
+   const data = await this.oderRepository
       .createQueryBuilder()
       .update(Order)
       .set({
@@ -56,11 +56,11 @@ export class OrderService {
       .where({ id: id })
       .execute();
 
-    return 'Cancelled successfully';
+    return data;
   }
 
   async acceptOrder(id: number) {
-    await this.oderRepository
+   const data = await this.oderRepository
       .createQueryBuilder()
       .update(Order)
       .set({
@@ -68,8 +68,7 @@ export class OrderService {
       })
       .where({ id: id })
       .execute();
-
-    return 'Accepted successfully';
+    return data;
   }
 
   remove(id: number) {

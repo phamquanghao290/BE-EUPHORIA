@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
+  Put,
 } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -30,15 +32,16 @@ export class OrderController {
     return this.orderService.getBillById(id.id);
   }
 
-  @Patch('/cancelOrder/:id')
-  async update(@Param('id') id: CreateOrderDto) {
-    return await this.orderService.cancelOrder(+id);
-    //  await this.orderService.updateStocksProduct(+id,1)
+  @Put('/cancelOrder/:id')
+  async update(@Param('id') id: CreateOrderDto, @Res() res:any) {
+    const result = await this.orderService.cancelOrder(+id);
+    res.status(200).json(result)
   }
 
-  @Patch('/acceptOrder/:id')
-  updateStatus(@Param('id') id: string) {
-    return this.orderService.acceptOrder(+id);
+  @Put('/acceptOrder/:id')
+  updateStatus(@Param('id') id: string, @Res() res:any) {
+    const result = this.orderService.acceptOrder(+id);
+    res.status(200).json(result)
   }
 
   

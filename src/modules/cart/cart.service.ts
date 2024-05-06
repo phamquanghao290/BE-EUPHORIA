@@ -21,12 +21,6 @@ export class CartService {
   }
   
   async create(userId: any, product: any) {
-    const check = await this.getCartByUserId(userId, product.id);
-    if (check.length > 0) {
-      return {
-        message: 'Products already in the cart',
-      };
-    } else {
       const newCart = this.cartRepository
         .createQueryBuilder('cart')
         .insert()
@@ -40,8 +34,8 @@ export class CartService {
         message: 'Add product to cart successfully',
         data: newCart.execute(),
       };
-    }
   }
+  
   async findOne(id: number) {
     return await this.cartRepository
       .createQueryBuilder('cart')
@@ -52,7 +46,6 @@ export class CartService {
   }
 
   async findAll() {
-    // lấy ra tất cả user_id trong bảng cart
     return await this.cartRepository
       .createQueryBuilder('cart')
       .select()
@@ -86,11 +79,7 @@ export class CartService {
   }
 
   async remove(id: number) {
-    await this.cartRepository.delete(id);
-    return {
-      status: 'success',
-      message: 'Deleted successfully',
-    };
+    return await this.cartRepository.delete(id);
   }
   async deleteAll(userId: number) {
     await this.cartRepository

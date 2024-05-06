@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
 } from '@nestjs/common';
 import { OrderDetailService } from './order-detail.service';
 import { CreateOrderDetailDto } from './dto/create-order-detail.dto';
@@ -30,7 +31,6 @@ export class OrderDetailController {
       quantity,
     )
 
-    // return this.orderDetailService.create(createOrderDetailDto);
   }
 
   @Get()
@@ -39,9 +39,9 @@ export class OrderDetailController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: CreateOrderDetailDto) {
+  async findOne(@Param('id') id: CreateOrderDetailDto,@Res() res:any) {
     const result = await this.orderDetailService.findByOrder(+id);
-    return result;
+    res.status(200).json(result)
   }
 
   @Patch(':id')
