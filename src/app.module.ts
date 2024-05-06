@@ -12,6 +12,7 @@ import { BrandsModule } from './modules/brands/brands.module';
 import { BannerModule } from './modules/banner/banner.module';
 import { FavoriteProductModule } from './modules/favorite_product/favorite_product.module';
 import { CategoryModule } from './modules/category/category.module';
+import { MaillerModule } from './modules/mailler/mailler.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CategoryModule } from './modules/category/category.module';
     BannerModule,
     FavoriteProductModule,
     CategoryModule,
+    MaillerModule,
   ],
   controllers: [],
   providers: [],

@@ -19,7 +19,7 @@ export class BrandController {
   async create(@Body() createBrandDto: CreateBrandDto) {
     const result = await this.brandService.create(createBrandDto);
     const allBrand = await this.brandService.findAll();
-    return { message: 'Thêm thương hiệu thành công', data: allBrand};  
+    return { message: 'Add brand successfully', data: allBrand};  
   }
 
   @Get()
@@ -32,13 +32,13 @@ export class BrandController {
   async update(@Param('id') id: string,@Body() updateBrandDto: UpdateBrandDto,) {
     const result = await this.brandService.update(+id, updateBrandDto);
     const allBrand = await this.brandService.findAll();
-    return {message: 'Cập nhật thương hiệu thành công',data: allBrand};  
+    return {message: 'Update brand successfully',data: allBrand};  
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const result = await this.brandService.remove(+id);
     const allBrand = await this.brandService.findAll();
-    return { message: 'Xoá thương hiệu thành công', data: allBrand };
+    return { message: 'Delete brand successfully', data: allBrand };
   }
 }

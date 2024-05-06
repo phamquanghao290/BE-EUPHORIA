@@ -116,12 +116,12 @@ export class AuthService {
     if (!check) {
       return {
         status: 400,
-        message: 'Email không tồn tại',
+        message: 'Email does not exist',
       };
     }
     const checkPassword = await argon2.verify(check.password, user.password);
     if (!checkPassword) {
-      throw new UnauthorizedException('mật khẩu không đúng');
+      throw new UnauthorizedException('Wrong password');
     }
     return {
       token: await this.generateToken({
