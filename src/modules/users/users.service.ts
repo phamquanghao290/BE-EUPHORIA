@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { log } from 'console';
 
 const PUBLISH_KEY = 'isPublishKey';
 export const Publish = () => SetMetadata(PUBLISH_KEY, true);
@@ -51,8 +52,19 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    return await this.userRepository.findOne({ where: { id } });
+  }
+
+  //update mật khau theo email
+  async update(email: string, password: string) {
+    return await this.userRepository
+      .createQueryBuilder()
+      .update(User)
+      .set({ password: password })
+      .where({ email: email })
+      .execute();
+      
   }
 
   remove(id: number) {
